@@ -13,6 +13,7 @@ import {
   IsStrongPassword,
   MaxLength,
   MinLength,
+  Validate,
   ValidationArguments,
 } from "class-validator";
 
@@ -24,7 +25,7 @@ import { VerifyEqualsPassword } from "@shared/validators/VerifyEqualsPassword";
 
 import { IUser } from "@modules/users/domain/models/IUser";
 
-import { MinAdMaxLength } from "@shared/validators/MinAdMaxLength";
+import { MinAndMaxLength } from "@shared/validators/MinAndMaxLength";
 
 @Entity("users")
 class User implements IUser {
@@ -42,7 +43,9 @@ class User implements IUser {
     message: "It's not allowed to implement symbols and numbers in the name.",
   })
   @IsNotEmpty({ message: "Name is required" })
-  @MinAdMaxLength()
+  @Validate(MinAndMaxLength, [3, 20], {
+    message: "You need to pass characters between 2 and 21 ",
+  })
   name: string;
 
   @Column({ default: "default.jpg" })
