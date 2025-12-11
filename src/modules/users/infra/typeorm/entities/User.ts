@@ -17,10 +17,17 @@ import {
 } from "class-validator";
 
 import { Exclude } from "class-transformer";
-import { IsLettersOnly } from "./customValidators/isLettersOnly";
+
+import { IsLettersOnly } from "@shared/validators/IsLettersOnly";
+
+import { VerifyEqualsPassword } from "@shared/validators/VerifyEqualsPassword";
+
+import { IUser } from "@modules/users/domain/models/IUser";
+
+import { MinAdMaxLength } from "@shared/validators/MinAdMaxLength";
 
 @Entity("users")
-class User {
+class User implements IUser {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -35,18 +42,7 @@ class User {
     message: "It's not allowed to implement symbols and numbers in the name.",
   })
   @IsNotEmpty({ message: "Name is required" })
-  @MaxLength(15, {
-    message: "You need to pass until 15 characters",
-  })
-  @MinLength(5, {
-    message: (args: ValidationArguments) => {
-      if (args.value.length === 1) {
-        return "Too short, please pass at least 5 characters";
-      } else {
-        return "You need to pass at least 15 characters";
-      }
-    },
-  })
+  @MinAdMaxLength()
   name: string;
 
   @Column({ default: "default.jpg" })
@@ -65,11 +61,19 @@ class User {
   password: string;
 
   @Column()
+  @VerifyEqualsPassword("password", {
+    message: "Password are not the same",
+  })
   passwordConfirm: string;
-  
+
+  @Column({ default: false })
+  isActive: Boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 }
+
+export default User;
