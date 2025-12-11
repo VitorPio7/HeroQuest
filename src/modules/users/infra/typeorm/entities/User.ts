@@ -63,8 +63,9 @@ class User {
     minSymbols: 1,
   })
   password: string;
- 
+
   @Column()
+  passwordConfirm: string;
   
   @CreateDateColumn()
   created_at: Date;

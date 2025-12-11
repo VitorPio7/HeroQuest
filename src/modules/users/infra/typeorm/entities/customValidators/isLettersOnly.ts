@@ -17,7 +17,7 @@ export function IsLettersOnly(validationOptions?: ValidationOptions) {
           return /^[A-Za-z]+$/.test(value);
         },
         defaultMessage(args: ValidationArguments) {
-          return `${args.property} deve conter apenas letras`;
+          return `${args.property} You need to pass only characters`;
         },
       },
     });
