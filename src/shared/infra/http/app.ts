@@ -26,11 +26,17 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(helmet());
 
+app.use(express.json({
+  limit:'10kb'
+}))
+
 app.use("/api", rateLimiter);
 
-app.use(express.json({
-    limit: '10kb'
-}))
+app.use(
+  express.json({
+    limit: "10kb",
+  })
+);
 
 app.use(xss());
 
