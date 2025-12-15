@@ -21,8 +21,6 @@ import { Exclude } from "class-transformer";
 
 import { IsLettersOnly } from "@shared/validators/IsLettersOnly";
 
-import { VerifyEqualsPassword } from "@shared/validators/VerifyEqualsPassword";
-
 import { IUser } from "@modules/users/domain/models/IUser";
 
 import { MinAndMaxLength } from "@shared/validators/MinAndMaxLength";
@@ -62,12 +60,6 @@ class User implements IUser {
     minSymbols: 1,
   })
   password: string;
-
-  @Column()
-  @VerifyEqualsPassword("password", {
-    message: "Password are not the same",
-  })
-  passwordConfirm: string;
 
   @Column({ default: false })
   isActive: Boolean;
