@@ -8,6 +8,6 @@ export interface IEmailProvider {
     from: string,
     subject: string,
     textEmail: string,
-    link: string,
+    link: string
   ): Promise<SMTPTransport.SentMessageInfo>;
 }

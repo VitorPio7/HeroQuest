@@ -5,6 +5,8 @@ import { IUser } from "../domain/models/IUser";
 import AppError from "@shared/errors/AppError";
 import BcryptHashProvider from "../providers/HashProvider/implementations/BcryptHashProvider";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
+import SendEmail from "../providers/SenEmailProvider/implementations/SendEmail";
+
 @injectable()
 class CreateUserService {
   constructor(
