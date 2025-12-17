@@ -1,11 +1,20 @@
 import { inject, injectable } from "tsyringe";
+
 import { IUserRepository } from "../domain/repositories/IUserRepository";
+
 import { IUserCreate } from "../domain/models/IUserCreate";
+
 import { IUser } from "../domain/models/IUser";
+
 import AppError from "@shared/errors/AppError";
+
 import BcryptHashProvider from "../providers/HashProvider/implementations/BcryptHashProvider";
+
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
+
 import SendEmail from "../providers/SenEmailProvider/implementations/SendEmail";
+
+import { IEmailProvider } from "../providers/SenEmailProvider/models/IEmailProvider";
 
 @injectable()
 class CreateUserService {
@@ -13,7 +22,9 @@ class CreateUserService {
     @inject("UserRepository")
     private usersRepository: IUserRepository,
     @inject("HashProvider")
-    private hashProvider: IHashProvider
+    private hashProvider: IHashProvider,
+    @inject("EmailProvider")
+    private emailProvider: IEmailProvider
   ) {}
 
   public async execute({ name, email, password }: IUserCreate): Promise<IUser> {
