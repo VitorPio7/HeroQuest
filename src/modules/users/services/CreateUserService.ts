@@ -8,13 +8,12 @@ import { IUser } from "../domain/models/IUser";
 
 import AppError from "@shared/errors/AppError";
 
-import BcryptHashProvider from "../providers/HashProvider/implementations/BcryptHashProvider";
 
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
-import SendEmail from "../providers/SenEmailProvider/implementations/SendEmail";
-
 import { IEmailProvider } from "../providers/SenEmailProvider/models/IEmailProvider";
+
+import { ITokenGenerator } from "@shared/providers/models/ITokenGenerator";
 
 @injectable()
 class CreateUserService {
@@ -24,7 +23,9 @@ class CreateUserService {
     @inject("HashProvider")
     private hashProvider: IHashProvider,
     @inject("EmailProvider")
-    private emailProvider: IEmailProvider
+    private emailProvider: IEmailProvider,
+    @inject("TokenGeneratorProvider")
+    private tokenGeneratorProvider: ITokenGenerator,
   ) {}
 
   public async execute({ name, email, password }: IUserCreate): Promise<IUser> {
@@ -34,7 +35,7 @@ class CreateUserService {
     }
     const hashedPassword = await this.hashProvider.generateHash(password);
 
-    const emailSent = await this.emailProvider.sendEmail(email,name,)
+    const emailSent = await this.emailProvider.sendEmail(email,name,);
 
     const user = await this.usersRepository.create({
       name,
