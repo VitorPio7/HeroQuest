@@ -1,3 +1,5 @@
+import SMTPTransport from "nodemailer/lib/smtp-transport";
+
 export interface IEmailProvider {
   sendEmail(
     to: string,
@@ -7,5 +9,5 @@ export interface IEmailProvider {
     subject: string,
     textEmail: string,
     link: string,
-  ): Promise<void>;
+  ): Promise<SMTPTransport.SentMessageInfo>;
 }

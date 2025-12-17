@@ -3,8 +3,9 @@ import transport from "@config/emailNodeMailer";
 import { IEmailProvider } from "../models/IEmailProvider";
 
 import EmailText from "./EmailText";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 class SendEmail implements IEmailProvider {
-  public async sentEmail(
+  public async sendEmail(
     to: string,
     firstName: string,
     url: string,
@@ -12,14 +13,15 @@ class SendEmail implements IEmailProvider {
     subject: string,
     textEmail: string,
     link: string
-  ): Promise<void> {
-    const html = new EmailText().emailText(subject, textEmail, link);
+  ): Promise<SMTPTransport.SentMessageInfo> {
+    const html = new EmailText().emailTextSent(subject, textEmail, link);
     const info = await transport.sendMail({
       from: `${process.env.NAME} < ${process.env.EMAIL_HOST_DEV}>`,
       to,
       subject,
       html,
     });
+    return info
   }
 }
 
