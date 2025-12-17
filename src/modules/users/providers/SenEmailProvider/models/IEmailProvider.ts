@@ -5,7 +5,7 @@ export interface IEmailProvider {
     url: string,
     from: string,
     subject: string,
-    text: string,
-    link: string
+    textEmail: string,
+    link: string,
   ): Promise<void>;
 }

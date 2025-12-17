@@ -2,15 +2,13 @@ import nodemailer from "nodemailer";
 
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
 
-const configNodemailer: SMTPTransport.Options = {
+const transport = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
+  port: Number(process.env.EMAIL_PORT) || 0,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-};
-
-const transport = nodemailer.createTransport(configNodemailer);
+} as nodemailer.TransportOptions);
 
 export default transport;
