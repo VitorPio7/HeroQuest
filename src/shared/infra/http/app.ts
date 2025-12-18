@@ -10,11 +10,15 @@ import morgan from "morgan";
 
 import helmet from "helmet";
 
+import { errors } from "celebrate";
+
 import dotenv from "dotenv";
 
-import { rateLimiter } from "@config/rateLimit";
+import rateLimiter from "@config/rateLimit";
 
 import { xss } from "express-xss-sanitizer";
+
+import routes from "./routes/index";
 
 import AppError from "@shared/errors/AppError";
 
@@ -25,6 +29,17 @@ const app = express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.use(routes);
+
+app.use(errors());
+
+app.use((error: AppError, req: Request, res: Response, next: NextFunction) => {
+  return res.status(error.statusCode).json({
+    status: 'error',
+    message: error.message
+  });
+});
 
 app.use(helmet());
 
