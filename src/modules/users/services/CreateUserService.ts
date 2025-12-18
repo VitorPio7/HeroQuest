@@ -50,7 +50,15 @@ class CreateUserService {
 
     const url = `http://localhost:3000/${createToken}`;
 
-    await this.emailProvider.sendEmail(email, name, url);
+    await this.emailProvider.sendEmail(
+      email,
+      name,
+      url,
+      user.email,
+      "Confirm your email",
+      "Please, confirm your email in the link bellow",
+      "You must to confirm your account to enjoy everything from our website"
+    );
 
     return user;
   }
