@@ -1,12 +1,32 @@
 import nodemailer from "nodemailer";
 
-const transport = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT) || 0,
-  auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-} as nodemailer.TransportOptions);
+// async function getEmailConfig() {
+//   return await nodemailer.createTestAccount();
+// }
 
-export default transport;
+// const transport = nodemailer.createTransport({
+//   host: getEmailConfig.smtp.host,
+//   port: testAccount.smtp.port,
+//   auth: {
+//     user: testAccount.user,
+//     pass: testAccount.pass,
+//   },
+// } as nodemailer.TransportOptions);
+
+// export default transport;
+
+async function getEmailConfig() {
+  const testAccount = await nodemailer.createTestAccount();
+
+  const transport = nodemailer.createTransport({
+    host: testAccount.smtp.host,
+    port: testAccount.smtp.port,
+    auth: {
+      user: testAccount.user,
+      pass: testAccount.pass,
+    },
+  } as nodemailer.TransportOptions);
+  return transport;
+}
+
+export default getEmailConfig;
