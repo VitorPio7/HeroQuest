@@ -61,6 +61,10 @@ class User implements IUser {
   })
   password: string;
 
+  @Column()
+  @IsString()
+  tokenActiveAccount: string;
+  
   @Column({ default: false })
   isActive: Boolean;
 
