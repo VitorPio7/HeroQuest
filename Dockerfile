@@ -1,8 +1,12 @@
-##Esse é um dockerfile para implementar toda a API externa
-FROM node:lts-slim
-
-RUN apt-get install ...
-
-USER node
+FROM node:18
 
 WORKDIR /home/node/app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+RUN chmod +x .docker/entrypoint.sh
+
+CMD [".docker/entrypoint.sh"]

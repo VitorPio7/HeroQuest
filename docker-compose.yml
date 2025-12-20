@@ -2,8 +2,6 @@ services:
   app:
     ## indica que o docker-file está nesse diretório para buildar
     build: .
-    ## localização do shell que rodará esses comandos assim que criar o container
-    entrypoint: .docker/entrypoint.sh
     container_name: heroQuest-app
     ## mapeia a porta 3333 do container para a porta 3333 da minha máquina
     ports:
@@ -12,6 +10,8 @@ services:
     ## sincroniza o diretório atual '.' com o do container '/home/node/app'
       - .:/home/node/app
     ## informa que o app só deverá ser informado após esses serviços
+    env_file:
+      - .env
     depends_on:
       - db
       - redis
@@ -24,13 +24,16 @@ services:
       - "5432:5432"
     volumes:
     ## ele mapeia o diretório atual para esse diretório no container
-      - .docker/dbdata:/var/lib/postfresql/data
+      - .docker/dbdata:/var/lib/postgresql/data
+
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: heroQuest
   redis:
     image: bitnami/redis:latest
     container_name: heroQuest-redis
+    restart: always
     environment:
       ALLOW_EMPTY_PASSWORD: 'yes'
   
