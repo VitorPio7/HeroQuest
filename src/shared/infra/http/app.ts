@@ -12,6 +12,8 @@ import helmet from "helmet";
 
 import { errors } from "celebrate";
 
+import errorHandler from "@shared/errors/errorHandler";
+
 import dotenv from "dotenv";
 
 import rateLimiter from "@config/rateLimit";
@@ -33,20 +35,6 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api", routes);
 
 app.use(errors());
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  if(error instanceof AppError){
-   return res.status(error.statusCode).json({
-     status: error.statusCode,
-     message: error.message,
-   });
-  }
-  return res.status(500).json({
-    status: 'error',
-    message: 'Internal server error'
-  })
-  
-});
 
 app.use(helmet());
 
@@ -76,4 +64,5 @@ app.all(/(.*)/, (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
+app.use(errorHandler);
 export { app };
