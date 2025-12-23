@@ -2,11 +2,8 @@ FROM node:18
 
 WORKDIR /home/node/app
 
-COPY package*.json ./
-RUN npm ci
+RUN apt-get update && apt-get install -y netcat-openbsd
 
-COPY . .
+USER node
 
-RUN chmod +x .docker/entrypoint.sh
-
-CMD [".docker/entrypoint.sh"]
+CMD ["npm", "run", "dev"]

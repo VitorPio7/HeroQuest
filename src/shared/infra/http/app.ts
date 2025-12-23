@@ -30,15 +30,22 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use('/api',routes);
+app.use("/api", routes);
 
 app.use(errors());
 
-app.use((error: AppError, req: Request, res: Response, next: NextFunction) => {
-  return res.status(error.statusCode).json({
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  if(error instanceof AppError){
+   return res.status(error.statusCode).json({
+     status: error.statusCode,
+     message: error.message,
+   });
+  }
+  return res.status(500).json({
     status: 'error',
-    message: error.message
-  });
+    message: 'Internal server error'
+  })
+  
 });
 
 app.use(helmet());
