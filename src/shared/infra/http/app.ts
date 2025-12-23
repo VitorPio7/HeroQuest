@@ -38,12 +38,6 @@ app.use(errors());
 
 app.use(helmet());
 
-app.use(
-  express.json({
-    limit: "10kb",
-  })
-);
-
 app.use("/api", rateLimiter);
 
 app.use(
