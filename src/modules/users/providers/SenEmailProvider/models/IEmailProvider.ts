@@ -9,5 +9,5 @@ export interface IEmailProvider {
     subject: string,
     textEmail: string,
     link: string
-  ): Promise<SMTPTransport.SentMessageInfo>
+  ): Promise<SMTPTransport.SentMessageInfo>;
 }
