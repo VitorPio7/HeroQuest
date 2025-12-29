@@ -34,4 +34,16 @@ describe("CreateUser", () => {
       fakeTokenGenerator
     );
   });
+
+  it('should be able to create a new user', async()=>{
+    const user = await createUser.execute({
+        name:"Vitor Pio",
+        email:"vitor@example.com",
+        password:"123456"
+    })
+    expect(user).toHaveProperty("id");
+  })
+  it('should sent the email after create a new user', async()=>{
+    const sendEmail = jest.spyOn(fakeEmailProvider, 'sendEmail');
+  })
 });
