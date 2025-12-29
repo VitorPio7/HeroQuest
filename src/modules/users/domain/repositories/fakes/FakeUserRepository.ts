@@ -37,4 +37,7 @@ class FakeUserRepository implements IUserRepository {
     this.users[findIndex] = user;
     return user;
   }
+
 }
+
+export default FakeUserRepository;
