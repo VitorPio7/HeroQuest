@@ -17,6 +17,7 @@ const config: Config = {
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/*.spec.ts"],
+  transformIgnorePatterns: ["node_modules/(?!(uuid)/)"],
 };
 
 export default config;

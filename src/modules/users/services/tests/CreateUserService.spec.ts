@@ -9,6 +9,7 @@ import AppError from "@shared/errors/AppError";
 import FakeTokenGenerator from "@shared/providers/Fakes/FakeTokenGenerator";
 
 import FakeHashProvider from "@modules/users/providers/HashProvider/fakes/fakesHashProvider";
+
 import FakeEmailProvider from "@modules/users/providers/SenEmailProvider/Fakes/FakeEmailProvider";
 
 let fakeUserRepository: FakeUserRepository;
