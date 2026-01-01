@@ -88,12 +88,14 @@ describe("CreateUser", () => {
       email: "vitor@example.com",
       password: "123456",
     });
-    expect(
-      await createUser.execute({
+    await expect(
+      createUser.execute({
         name: "Vitor Pio",
         email: "vitor@example.com",
         password: "123456",
       })
-    ).rejects.toBeInstanceOf(AppError);
+    ).rejects.toMatchObject({
+      message: "This email already exist",
+    });
   });
 });

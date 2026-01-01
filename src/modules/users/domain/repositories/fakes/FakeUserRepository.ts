@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
-
 import { IUserCreate } from "../../models/IUserCreate";
 
 import { IUserRepository } from "../IUserRepository";
 
 import User from "@modules/users/infra/typeorm/entities/User";
+
 import { IUser } from "../../models/IUser";
 
 class FakeUserRepository implements IUserRepository {
@@ -12,7 +11,7 @@ class FakeUserRepository implements IUserRepository {
 
   public async create({ name, email, password }: IUserCreate): Promise<User> {
     const user = new User();
-    user.id = uuidv4();
+    user.id = Math.random().toString(36).substring(2, 10);
     user.password = password;
     user.email = email;
     user.name = name;
@@ -37,7 +36,6 @@ class FakeUserRepository implements IUserRepository {
     this.users[findIndex] = user;
     return user;
   }
-
 }
 
 export default FakeUserRepository;
